@@ -1,8 +1,16 @@
 # video-spec-builder
 
-> 你的视频脚本搭档 —— 通过苏格拉底式追问,把一个模糊的"我想做个视频"逼成一份**可执行的分镜脚本** `video-spec.md`。
+> 把"我想做个视频"逼成一份能直接开拍的分镜脚本。
 
-一个 AI Agent 技能(Skill)。装到 Claude Code / Cursor / Codex 等环境后,你只要说"我想做个视频",它就坐到你对面,像导演听 brief 一样追问你 —— 不接受形容词、不接受"大概十几秒"、追到每一个镜头的粒度,最后产出一份标准化的 `video-spec.md`,直接交给 [HyperFrames](https://github.com/heygen-com/hyperframes) 渲染成视频。
+你有一个视频的想法。在脑子里它是模糊的 —— "想要个高大上的产品片",可每个镜头几秒、画面上是什么、节奏怎么走,你说不清。模糊的想法,做不出好视频。
+
+**video-spec-builder** 是住进你终端里的一位视频总监。你把想法丢给它,它就把你逼到墙角 —— 形容词一律打回,"大概十几秒"一律不收,一个镜头一个镜头追问下去,直到整支视频在纸面上成形,精确到秒。
+
+它还会主动替你想:这个画面可以上 AI 配音、逐词高亮字幕、3D 旋转、跟着鼓点跳的动效、花式转场…… 渲染层能干的事你多半不知道,它知道,而且会告诉你。
+
+最后你拿到一份 `video-spec.md` —— 一份每个镜头都拆到位、精确到秒的分镜脚本。交给 [HyperFrames](https://github.com/heygen-com/hyperframes),它变成真正的视频。
+
+**你负责想,它负责逼你想清楚。** 一次安装,Claude Code / Cursor / Codex 通用。
 
 ---
 
@@ -127,7 +135,7 @@ HyperFrames 会读脚本,把每个镜头渲染成真正的视频。
 - **预设主题** —— HyperFrames 自带 8 个预设(Swiss Pulse / Shadow Cut / Data Drift…),选名字即可。
 - **自定义主题** —— 一个放在项目根目录的 `design.md`(HyperFrames 格式:YAML 头 + 设计规则章节)。
 
-本仓库 `examples/spec-mono/` 就是一个**完整的自定义主题样板**,名为 **Spec Mono**(纯黑白 · SpaceX × Grok 视觉语言):
+本仓库根目录的 **Spec Mono** 主题(纯黑白 · SpaceX × Grok 视觉语言)就是一个**完整的自定义主题样板**:
 
 | 文件 | 作用 |
 |---|---|
@@ -135,7 +143,7 @@ HyperFrames 会读脚本,把每个镜头渲染成真正的视频。
 | `tokens.css` | 可复用 CSS(设计变量 + 装饰工具类) |
 | `spec-mono-components.md` | 69 个组件在该主题下的逐个细规格 |
 
-要做自己的自定义主题,照着 `examples/spec-mono/design.md` 的格式写一份,放到你视频项目的根目录即可。
+要做自己的自定义主题,照着 `design.md` 的格式写一份,放到你视频项目的根目录即可。
 
 ---
 
@@ -144,6 +152,8 @@ HyperFrames 会读脚本,把每个镜头渲染成真正的视频。
 ```
 video-spec-builder/
 ├── SKILL.md                      技能主文件(入口)
+├── README.md                     本文件
+├── LICENSE
 ├── references/                   按需加载的参考文档
 │   ├── workflow-0-1.md             0-1 模式 5 阶段流程
 │   ├── workflow-iteration.md       迭代模式流程
@@ -155,12 +165,12 @@ video-spec-builder/
 │   └── dialogue-style.md           对话风格范本
 ├── templates/
 │   └── video-spec-template.md    video-spec.md 输出模板
-└── examples/
-    ├── video-spec-spacex.md      完整 video-spec 示例(SpaceX 发展史)
-    └── spec-mono/                自定义主题样板(Spec Mono)
-        ├── design.md
-        ├── tokens.css
-        └── spec-mono-components.md
+├── examples/
+│   └── video-spec-spacex.md      完整 video-spec 示例(SpaceX 发展史)
+│
+├── design.md                     Spec Mono 主题 —— 主题本体(HyperFrames 读这个)
+├── tokens.css                    Spec Mono 主题 —— 可复用 CSS
+└── spec-mono-components.md        Spec Mono 主题 —— 69 组件逐个细规格
 ```
 
 ---
@@ -172,7 +182,7 @@ video-spec-builder/
         │
         ▼
 ┌─────────────────────┐
-│  video-spec-builder │  苏格拉底式追问 · 5 阶段
+│  video-spec-builder │  追问到镜头粒度 · 5 阶段
 │  （本技能）          │
 └─────────────────────┘
         │  产出
