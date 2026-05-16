@@ -1,193 +1,195 @@
 <img width="2172" height="724" alt="ChatGPT Image May 16, 2026, 10_46_58 PM" src="https://github.com/user-attachments/assets/7820d93e-84b6-4e09-904c-9567c6595c57" />
 
-[English](README.en.md) · **中文**
+**English** · [中文](README.zh.md)
 
 # video-spec-builder
 
-> 一个像视频编导的 skill。你说一句"我想做个视频",它就追着问你,帮你把想法理成一份能落地的分镜脚本。
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)](LICENSE) ![Agent Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet) [![skills.sh Compatible](https://img.shields.io/badge/skills.sh-Compatible-brightgreen)](https://skills.sh)
 
-我做这个 skill,是因为发现做视频最卡人的不是渲染,是前面那一步:想清楚。
+> A skill that works like a video director. You say "I want to make a video," and it grills you with questions until your idea is a script you can actually shoot.
 
-你心里有个念头,想做个产品片、发条抖音、做个公司介绍。可念头是模糊的。真要落地,每个镜头几秒、画面上摆什么、先讲什么后讲什么,这些细节你未必想得全,也未必说得出来。
+I built this skill after realizing the hard part of making a video isn't the rendering. It's figuring out what you actually want.
 
-video-spec-builder 就是来陪你过这一关的。装好之后,你在 Codex 或者 Claude Code 里说一句"我想做个视频",它就接管对话,像编导听你讲 brief 那样一路追问:这视频给谁看?多长?最想让人记住哪句话?哪个镜头是重点?你答不上来的、压根没想到的地方,它会停下来提醒你、帮你补上。
+You've got a vague idea in your head: a product video, a short for social, a company intro. But it's fuzzy. The moment you try to build it, the details get you — how long each shot runs, what's on screen, what comes first and what comes later. You probably haven't pinned them all down, and you might not even be able to put them into words.
 
-来回聊下来,你那个模糊的念头会变成一份 `video-spec.md`:精确到秒、每个镜头都写明白的分镜脚本。这份脚本交给 HyperFrames,就能渲染成真正的视频。
+video-spec-builder gets you through that part. Install it, then tell your AI "I want to make a video" inside Codex or Claude Code, and it takes over the conversation. It listens to your brief the way a director would, then keeps asking: Who's this for? How long? What's the one line people should walk away with? Which shot carries the weight? Anywhere you go vague, or skip something, it stops and pushes you to fill it in.
 
-它不替你拍片,也不替你想创意。它就做一件事:逼着你、也陪着你,把想法想到能落地为止。
+A few rounds of that, and the fuzzy idea becomes a `video-spec.md`: a shot-by-shot script, timed to the second, every shot written out. Hand that to HyperFrames and it renders into a real video.
 
-## 它帮你解决什么
+It won't shoot the video for you, and it won't invent the idea. It does one thing: push you, and stay with you, until the idea is something you can actually build.
 
-它解决的是"我有想法,但说不清楚"这个问题。几种典型情况它都管用:
+## What it helps with
 
-- 你知道想要什么感觉,但说不出具体画面。它会把"高大上""有冲击力"这种形容词挡回去,问到你能描述出实际的画面和动作为止。
-- 你有想法,但有些环节根本没想到。比如开头结尾想好了,中间怎么过渡没想;比如你没意识到这段可以加字幕、可以让画面跟着音乐节奏动。这些它会主动提。
-- 你东西不少,但理不出头绪。逐字稿、卖点、素材一大堆,它帮你拆成一个个镜头,排出先后和节奏。
+The problem it solves is "I have an idea but I can't explain it." A few situations where it earns its keep:
 
-最后它把这些落成脚本。每个镜头是什么内容、用什么呈现、停几秒、怎么转到下一个,全写清楚。
+- You know the feeling you want but can't describe the actual picture. It refuses words like "premium" or "high-impact" and keeps after you until you can describe real shots and real motion.
+- You have an idea but never thought parts of it through. Maybe you've got the opening and the ending but not the middle. Maybe it never crossed your mind that a section could use captions, or that visuals can move to the beat of the music. It brings those up.
+- You have plenty of raw material but no order to it. A script, selling points, a pile of assets — it helps you cut that into individual shots and put them in sequence.
 
-它有两种用法。手上还没有脚本,它从头陪你聊一遍,产出 `video-spec.md`。已经有脚本、只想改某个地方,你直接说要改什么,它问清楚再动手,还会顺手查一下这改动会不会牵连别的镜头。
+In the end it writes all of it into a script: what each shot shows, how it's presented, how long it holds, how it cuts to the next one.
 
-## 工作流程
+There are two ways to use it. With no script yet, it talks you through the whole thing from scratch and produces a `video-spec.md`. With a script already there and just one thing to change, you tell it what you want different; it asks enough to be sure, makes the change, and checks whether it knocked anything else loose.
 
-整件事是两个 skill 接力。video-spec-builder 在上游,把你的想法变成脚本;HyperFrames 在下游,把脚本变成视频。
+## The workflow
+
+It's two skills working in sequence. video-spec-builder sits upstream and turns your idea into a script. HyperFrames sits downstream and turns the script into video.
 
 ```
-        你:"我想做个视频"
+       You: "I want to make a video"
                 │
                 ▼
    ┌────────────────────────┐
-   │   video-spec-builder   │   追问 + 拆镜头,陪你想清楚
+   │   video-spec-builder   │   asks, breaks it into shots
    └────────────────────────┘
                 │
                 ▼
-          video-spec.md           分镜脚本(精确到秒)
+          video-spec.md           shot-by-shot script, timed
                 │
                 ▼   /hyperframes
    ┌────────────────────────┐
-   │       HyperFrames      │   按脚本渲染
+   │       HyperFrames      │   renders from the script
    └────────────────────────┘
                 │
                 ▼
-            成品视频
+          finished video
 ```
 
-所以用之前,这两个 skill 都得先装上。
+So before you start, you'll want both skills installed.
 
-## 安装
+## Install
 
-这个 skill 我主要在 **Codex** 里用,其次是 **Claude Code**,这两个是它最顺手的场景。
+I mostly use this skill in **Codex**, and after that **Claude Code**. Those are the two setups it works best in.
 
-动手之前,先把两样东西装好:HyperFrames(下游负责渲染)和 video-spec-builder(这个 skill 本身)。都用 `skills` 这个命令行工具装,各一条命令:
+Before anything else, install two things: HyperFrames (the renderer, downstream) and video-spec-builder (this skill). Both go in through the `skills` CLI, one command each:
 
 ```bash
 npx skills add heygen-com/hyperframes
 npx skills add feicaiclub/video-spec-builder
 ```
 
-每条命令都一次装好,Codex、Claude Code、Cursor 这些环境都能调用,不用一个工具一个工具地装。
+Each command installs once and covers Codex, Claude Code, Cursor and the rest. You don't install separately for each tool.
 
-安装位置分两种。默认装到当前文件夹(项目级),只在你跑命令的那个项目里生效。如果你经常做视频,加 `-g` 装到全局,所有项目通用:
+Two scopes to know about. By default it installs into the current folder (project-level), so it only works in the project where you ran the command. If you make videos often, add `-g` to install globally, available everywhere:
 
 ```bash
 npx skills add feicaiclub/video-spec-builder -g
 ```
 
-没装过 `skills` 工具也不用管,`npx` 会临时拉一份来跑,跑完不留东西。需要 Node 18 以上。
+Never used the `skills` CLI? Nothing to set up. `npx` pulls a copy just to run and leaves nothing behind. Needs Node 18 or newer.
 
-## 怎么用
+## Using it
 
-### 从头做一个视频
+### Making a video from scratch
 
-装好后,在 Codex 或 Claude Code 里直接说人话:
-
-```
-我想做一个三分钟的产品演示视频,发在 B 站
-```
-
-它会接管对话,开始追问。你不用管它内部分几步,它就跟你正常聊天:先把基本盘问清,给谁看、在哪发、多长、核心讲什么。再盘你手头有什么素材。然后定表达方式和节奏,挑个视觉主题,最后拿参考片和反例帮你校准方向。
-
-这个过程是真的来回问答,不是让你填表。你答得含糊,它会追;你漏了什么,它会补。聊完,它把 `video-spec.md` 写出来。
-
-### 改一个已经有的视频
-
-项目里已经有 `video-spec.md`,想改直接说:
+Once it's installed, just talk to your AI in plain language inside Codex or Claude Code:
 
 ```
-第三个镜头节奏太快,放慢点;背景音乐换个安静的
+I want to make a 3-minute product demo, posting it on YouTube
 ```
 
-它会先把你要的效果问清楚,看看这改动会不会影响别的镜头,再更新脚本。
+It takes over and starts asking. You don't need to track its internal steps; it just talks with you. First it pins down the basics: who it's for, where it's going, how long, the core message. Then it takes stock of the material you have. Then it settles the style and pacing, picks a visual theme, and finally uses reference videos and counter-examples to calibrate.
 
-### 渲染成视频
+It's a real conversation, not a form to fill in. Answer vaguely and it digs; miss something and it fills it in. When you're done, it writes out `video-spec.md`.
 
-脚本定稿,交给 HyperFrames:
+### Changing a video you already have
+
+If there's already a `video-spec.md` in the project, just say what you want:
+
+```
+Shot 3 is too fast, slow it down; swap the background music for something quieter
+```
+
+It checks what you're after, looks at whether the change touches other shots, then updates the script.
+
+### Rendering it
+
+Once the script is final, hand it to HyperFrames:
 
 ```
 /hyperframes
 ```
 
-> 在 Claude Code 里,除了说人话自动触发,也可以直接打 `/video-spec-builder` 调用。
+> In Claude Code, besides triggering it by talking, you can also call it directly with `/video-spec-builder`.
 
-## HyperFrames 能做什么、做不到什么
+## What HyperFrames can and can't do
 
-这一段我得专门讲清楚,因为它直接决定你的脚本写得值不值。
+Worth spelling this out, because it decides whether your script is worth the paper it's on.
 
-HyperFrames 是把 HTML 渲染成视频。这句话是它一切能力和限制的根。HTML、CSS、还有代码能画出来的东西,它都能变成视频画面;HTML 画不出来的,它也变不出来。
+HyperFrames renders video from HTML. That one fact is the root of everything it can and can't do. If HTML, CSS, and code can draw it, HyperFrames can turn it into video. If HTML can't draw it, HyperFrames can't either.
 
-它**擅长**的是文字和排版相关的活:标题动效、字幕、逐词高亮、版面布局、转场、数据图表、UI 演示、几何动画。这些"用代码能画"的东西,它做得很利落。
+What it's **good at** is text and layout work: title animation, captions, word-by-word highlighting, page layout, transitions, charts, UI mockups, geometric animation. Anything you can draw with code, it handles cleanly.
 
-它**做不到**的,你写脚本之前就得心里有数。脚本写得再漂亮,HyperFrames 渲不出来,也是白写:
+What it **can't do** — know this before you write the script, because however good the script is, if HyperFrames can't render it, the work is wasted:
 
-- 它不会画插画。手绘风格的人物、有美术感的画面、卡通形象,这些它画不出来。让它写代码也画不出来,这不是代码能解决的事。代码能画的是图形和图表,不是画作。
-- 它不会生成实拍画面。一段真实拍摄的镜头、一个人物的表演,它凭空变不出来。
-- 它不会生成照片级的写实图像。
-- 配音它能用 AI 生成一版应急,但 AI 配音有明显的机器味。真要质量,还是自己录、或者找人配。
-- 背景音乐它不会替你作曲。
+- It can't draw illustrations. Hand-drawn characters, painterly visuals, cartoon figures — it can't produce those, and writing code won't get you there. Code draws shapes and charts, not artwork.
+- It can't generate live-action footage. A real filmed shot, a person performing — it can't conjure that out of nothing.
+- It can't generate photorealistic images.
+- It can generate a voiceover with AI (text-to-speech) in a pinch, but AI narration has an obvious machine tone. For real quality, record it yourself or hire someone.
+- It won't compose background music for you.
 
-说到底,HyperFrames 是个**组装**工具,不是**创作**工具。它把你准备好的素材(视频片段、图片、配音、音乐)剪辑、合成、配上文字和动效,拼成一支完整的视频。它干的是组装这一步。
+The short version: HyperFrames is an **assembly** tool, not a **creation** tool. It takes the material you've prepared — video clips, images, voiceover, music — cuts and composites it, adds text and motion, and puts together a finished video. Assembly is its job.
 
-所以有个很重要的提醒:视频好不好看,真正取决于你喂给它的素材。素材到位,HyperFrames 能帮你组装得很漂亮;素材本身不行,HyperFrames 再强也救不回来。视频片段、图片、配音、配乐,值得你提前认真准备好。决定视频质量的是这些素材,不是 HyperFrames 本身。
+So here's the thing worth remembering: how good the video looks comes down to the material you feed it. Good material and HyperFrames assembles it sharply. Weak material and HyperFrames can't save it. Video clips, images, voiceover, music — these are worth preparing carefully up front. They decide the quality, not HyperFrames.
 
-## 视觉主题
+## Visual themes
 
-视频长什么样(配色、字体、动效、转场风格),由"主题"决定。主题要么用 HyperFrames 自带的预设,要么自己写一套。
+What a video looks like — colors, fonts, motion, transition style — is decided by a "theme." You either use one of HyperFrames' built-in presets, or write your own.
 
-### HyperFrames 的 8 个预设
+### The 8 HyperFrames presets
 
-HyperFrames 内置了 8 套主题,报个名字就能用:
+HyperFrames ships 8 themes. Name one and it's yours:
 
-| 主题 | 气质 | 适合 |
+| Theme | Mood | Good for |
 |---|---|---|
-| Swiss Pulse | 精确、克制、瑞士排版 | SaaS、数据、开发者工具、指标看板 |
-| Velvet Standard | 高级、隽永 | 奢侈品、企业软件、主题演讲、投资路演 |
-| Deconstructed | 工业、粗粝 | 科技发布、安全产品、带点朋克劲的内容 |
-| Maximalist Type | 喧闹、动感 | 大型发布、里程碑公告、高能 hype 片 |
-| Data Drift | 未来感、沉浸 | AI 产品、ML 平台、前沿科技 |
-| Soft Signal | 亲密、温暖 | 健康品牌、个人故事、生活方式产品 |
-| Folk Frequency | 文化、鲜亮 | 消费类 app、美食、社区产品 |
-| Shadow Cut | 暗黑、电影感 | 安全产品、戏剧性揭示、严肃叙事 |
+| Swiss Pulse | Precise, restrained, Swiss type | SaaS, data, dev tools, dashboards |
+| Velvet Standard | Premium, timeless | Luxury, enterprise software, keynotes, investor decks |
+| Deconstructed | Industrial, raw | Tech launches, security products, anything with a punk edge |
+| Maximalist Type | Loud, kinetic | Big launches, milestone announcements, high-energy hype |
+| Data Drift | Futuristic, immersive | AI products, ML platforms, frontier tech |
+| Soft Signal | Intimate, warm | Wellness brands, personal stories, lifestyle products |
+| Folk Frequency | Cultural, vivid | Consumer apps, food, community products |
+| Shadow Cut | Dark, cinematic | Security products, dramatic reveals, serious storytelling |
 
-选定之后,在 `video-spec.md` 里写上主题名就行。
+Once you've picked one, write its name into `video-spec.md`.
 
-### 自己写一套
+### Writing your own
 
-预设不够味,可以自己定。HyperFrames 对自定义主题有几条硬要求,不复杂:
+If none of the presets fit, write your own. HyperFrames has a few hard rules for custom themes, nothing complicated:
 
-- 主题就是一个 `design.md` 文件,放在你视频项目的根目录。HyperFrames 渲染时会自动找到并读取它。
-- 文件格式是固定的。开头一段 YAML,写颜色、字体、圆角、间距、动效这些设计变量。下面用几个固定章节把设计规则讲清楚,章节是定死的:Overview、Colors、Typography、Elevation、Components、Do's and Don'ts。
-- 如果主题用到了 HyperFrames 没内置的字体,得自己把字体的 `.woff2` 文件放进项目的 `fonts/` 文件夹。
+- A theme is a single `design.md` file, placed at the root of your video project. HyperFrames finds and reads it automatically when rendering.
+- The format is fixed. A block of YAML up top for the design variables: colors, fonts, corner radius, spacing, motion. Below it, a set of fixed sections describing the design rules in prose: Overview, Colors, Typography, Elevation, Components, Do's and Don'ts.
+- If your theme uses a font HyperFrames doesn't ship with, put the font's `.woff2` files in the project's `fonts/` folder yourself.
 
-把写好的 `design.md` 丢进视频项目根目录,主题就生效了。
+Drop a finished `design.md` into the video project root and the theme is live.
 
-### 我给你配好的一套:Spec Mono
+### A theme I made for you: Spec Mono
 
-从头写 `design.md` 挺花工夫,所以我提前做了一套放进这个仓库,叫 **Spec Mono**:纯黑白配色,SpaceX × Grok 那种几何、克制、工程感的视觉语言。已经配好了,你可以直接拿去用。
+Writing a `design.md` from scratch takes some work, so I made one ahead of time and put it in this repo. It's called **Spec Mono**: pure black and white, the geometric, restrained, engineered look of SpaceX × Grok. It's done — use it as is.
 
-<!-- 占位图:把 Spec Mono 的预览图放到 spec-mono/preview.png,再把下面这行的注释去掉 -->
-<!-- ![Spec Mono 主题预览](spec-mono/preview.png) -->
+<!-- placeholder: drop the Spec Mono preview image at spec-mono/preview.png, then uncomment the line below -->
+<!-- ![Spec Mono preview](spec-mono/preview.png) -->
 
-*（此处放 Spec Mono 主题效果预览图）*
+*(Spec Mono theme preview goes here)*
 
-`spec-mono/` 文件夹里有三个文件:
+The `spec-mono/` folder holds three files:
 
-| 文件 | 是什么 |
+| File | What it is |
 |---|---|
-| `design.md` | 主题本体,HyperFrames 读的就是它 |
-| `tokens.css` | 一份现成的 CSS,颜色字体间距这些变量,外加一些装饰元素的样式 |
-| `spec-mono-components.md` | 69 种组件在这套主题下的逐个细节规格 |
+| `design.md` | the theme itself — this is what HyperFrames reads |
+| `tokens.css` | a ready-made CSS file: color/font/spacing variables, plus styles for some decorative elements |
+| `spec-mono-components.md` | the per-component spec for all 69 components under this theme |
 
-用法:把 `spec-mono/design.md` 复制到你视频项目的根目录,`tokens.css` 一起带上。它本来就是照 HyperFrames 的格式写的,放进去就能渲。
+To use it, copy `spec-mono/design.md` into your video project root and bring `tokens.css` along. It's already written to HyperFrames' format, so it renders right away.
 
-## 仓库结构
+## What's in this repo
 
 ```
 video-spec-builder/
-├── SKILL.md                  技能主文件,AI 从这里读起
-├── README.md                 中文
-├── README.en.md              English
+├── SKILL.md                  the skill's main file — the AI reads this first
+├── README.md                 English
+├── README.zh.md              中文
 ├── LICENSE
-├── references/               追问、拆分镜、节奏规范等参考文档,按需加载
+├── references/               reference docs on questioning, shot breakdown, pacing — loaded as needed
 │   ├── workflow-0-1.md
 │   ├── workflow-iteration.md
 │   ├── question-bank.md
@@ -197,10 +199,10 @@ video-spec-builder/
 │   ├── spec-rules.md
 │   └── dialogue-style.md
 ├── templates/
-│   └── video-spec-template.md    video-spec.md 的输出模板
+│   └── video-spec-template.md    output template for video-spec.md
 ├── examples/
-│   └── video-spec-spacex.md      一份完整的 video-spec 示例
-└── spec-mono/                    预置的自定义主题 Spec Mono
+│   └── video-spec-spacex.md      a complete video-spec example
+└── spec-mono/                    the bundled custom theme, Spec Mono
     ├── design.md
     ├── tokens.css
     └── spec-mono-components.md
