@@ -1,204 +1,161 @@
 # video-spec-builder
 
-> 把"我想做个视频"逼成一份能直接开拍的分镜脚本。
+> 把"我想做个视频"这种模糊念头,逼成一份能直接开拍的分镜脚本。
 
-你有一个视频的想法。在脑子里它是模糊的 —— "想要个高大上的产品片",可每个镜头几秒、画面上是什么、节奏怎么走,你说不清。模糊的想法,做不出好视频。
+做视频卡住的地方,往往不是不会渲染,是根本没想清楚。你脑子里只有"想要个有质感的产品片",但每个镜头几秒、画面上摆什么、节奏怎么走,问到这些就答不上来了。
 
-**video-spec-builder** 是住进你终端里的一位视频总监。你把想法丢给它,它就把你逼到墙角 —— 形容词一律打回,"大概十几秒"一律不收,一个镜头一个镜头追问下去,直到整支视频在纸面上成形,精确到秒。
+video-spec-builder 是一个 AI Agent 技能(Skill)。装好之后,你跟你的 AI 说一句"我想做个视频",它就开始像导演听 brief 那样追问你。它不接受形容词:你说"高大上",它问你高大上到底是什么画面;你说"大概十几秒",它让你把秒数定死。一个镜头一个镜头抠,直到整支片子在纸面上成形。
 
-它还会主动替你想:这个画面可以上 AI 配音、逐词高亮字幕、3D 旋转、跟着鼓点跳的动效、花式转场…… 渲染层能干的事你多半不知道,它知道,而且会告诉你。
+它还会顺手提醒你能做什么。AI 配音、字幕逐词跟读、3D 旋转、卡着鼓点跳的动效、花式转场,这些渲染层支持的能力大部分人压根不知道,它会在合适的时候告诉你。
 
-最后你拿到一份 `video-spec.md` —— 一份每个镜头都拆到位、精确到秒的分镜脚本。交给 [HyperFrames](https://github.com/heygen-com/hyperframes),它变成真正的视频。
+聊完,你会拿到一份 `video-spec.md`:精确到秒、每个镜头都拆好的分镜脚本。把它交给 [HyperFrames](https://github.com/heygen-com/hyperframes),就能渲染成真正的视频。
 
-**你负责想,它负责逼你想清楚。** 一次安装,Claude Code / Cursor / Codex 通用。
+## 它能帮上什么忙
 
----
+它会做这几件事:
 
-## 它是用来干嘛的
+- 把模糊需求问到能落地。"科技感""高级""有冲击力"这类形容词它不收,会逼你翻译成具体的画面和动作。
+- 告诉你渲染层能做什么。你未必知道可以加 AI 配音、让字幕逐词亮起、让画面元素跟着音乐节拍跳。
+- 盘素材。逐字稿、音频、视频、图片、数据、3D 模型,一项项过,缺什么、能不能现生成,当场说清楚。
+- 把卖点或逐字稿拆成分镜,落到单个镜头,每个镜头对应一个标准组件。
+- 定节奏。按视频类型和平台,把节奏算到"平均每个镜头几秒",每个转场怎么切也一并定下来。
+- 你后面想换镜头、改节奏,它会指出新改动和已定脚本打架的地方。
 
-做视频最难的不是渲染,是**想清楚**。大多数人脑子里只有"我想要个高大上的产品片",但说不出每个镜头几秒、画面上是什么、节奏怎么走。
+用法分两种。项目里还没有脚本时,它从零跟你聊,走完整个流程产出 `video-spec.md`。已经有脚本、你只想改某处时,它把改动问清楚再动手,顺带检查会不会牵连别的镜头。
 
-`video-spec-builder` 专门解决这一步。它不是渲染器,是渲染**之前**的那个环节 —— 把你脑子里的想法,翻译成机器能执行的脚本。
+## 安装
 
-它会做这些事:
-
-- **追问深挖** —— 不接受"高大上""科技感"这种形容词,逼你把需求落到具体的视觉/动效决策。
-- **能力激发** —— 主动告诉你渲染层能做什么(AI 配音、逐词字幕、3D、shader 转场、音频反应可视化…),你往往不知道这些能力存在。
-- **场景拆解** —— 把逐字稿 / 卖点拆到单镜头粒度,每个镜头锚定到一个标准组件。
-- **节奏与转场** —— 按视频类型和平台,把节奏钉到"平均每镜头几秒",定每个转场。
-- **冲突检测** —— 你后来改需求时,它会指出和已有脚本的矛盾。
-- **结构化输出** —— 最终产出带分镜表的 `video-spec.md`。
-
-两种工作模式:
-
-| 模式 | 触发 | 做什么 |
-|---|---|---|
-| **0-1 模式** | 项目里没有 video-spec.md | 从零对话收集需求,5 个阶段走完,产出完整 `video-spec.md` |
-| **迭代模式** | 项目里已有 video-spec.md | 你提出"换镜头/改节奏/换音乐",它追问 + 检测冲突 + 更新脚本 |
-
----
-
-## 如何安装
-
-本技能用 [`skills`](https://www.npmjs.com/package/skills) CLI 分发 —— **一条命令**装到你所有支持的 AI 环境,路径差异由它自己处理。
+用 `skills` 这个命令行工具装,一条命令搞定:
 
 ```bash
 npx skills add feicaiclub/video-spec-builder
 ```
 
-这一条命令会自动检测并安装到你环境里**所有支持的 Agent**:
+这条命令一次装好,Claude Code、Cursor、Codex 都能调用它,不用每个工具再单独装。
 
-| 环境 | 说明 |
-|---|---|
-| Claude Code | 安装到 `.claude/skills/`(符号链接) |
-| Cursor | universal 方式安装 |
-| Codex | universal 方式安装 |
-| Gemini CLI / OpenCode / Amp 等 | 同样自动覆盖 |
-
-常用选项:
+安装位置分两种。默认装到**当前文件夹**(项目级):你在哪个视频项目里跑命令,它就只在那个项目生效。如果你经常做视频,想省去每次重装,加 `-g` 装到全局,所有项目通用:
 
 ```bash
-# 装到全局(用户级),所有项目可用;默认是装到当前项目
 npx skills add feicaiclub/video-spec-builder -g
-
-# 只装到指定 Agent
-npx skills add feicaiclub/video-spec-builder -a claude-code
-
-# 跳过确认
-npx skills add feicaiclub/video-spec-builder -y
 ```
 
-> 没装过 `skills` CLI 也没关系,`npx` 会临时拉取,不污染全局环境。
+没装过 `skills` 工具也不用管,`npx` 会临时拉一份来跑,跑完不留东西。安装需要 Node 18 以上。
 
-**搭配渲染器**:本技能只产出脚本,渲染交给 HyperFrames。建议一并安装:
+视频的渲染要靠 HyperFrames,建议一起装上:
 
 ```bash
 npx skills add heygen-com/hyperframes
 ```
 
----
+## 怎么用
 
-## 如何使用
+### 从零做一个视频
 
-### 1. 起一个新视频(0-1 模式)
-
-装好后,在你的 AI Agent 里直接说人话即可触发:
+装好后,在你的 AI 里直接说人话:
 
 ```
-我想做一个 3 分钟的产品演示视频,发在 B 站
+我想做一个三分钟的产品演示视频,发在 B 站
 ```
 
-技能会自动激活(它的开场白是一个 ASCII logo + 自我介绍)。接下来它会带你走 5 个阶段 —— 你不需要知道这些阶段编号,它只会用大白话跟你聊:
+技能会自己接管,开始追问。你不用关心它内部分几步,它会用大白话跟你聊。大致顺序是:先把视频的基本盘问清——给谁看、在哪发、多长、核心要讲什么。然后盘手头素材,定表达手段和节奏。挑个视觉主题。最后拿参考片和反例校准方向。聊完,它把 `video-spec.md` 写出来。
 
-1. **视频基本盘** —— 目的 / 受众 / 平台 / 时长 / 核心信息 / 调性
-2. **素材盘点** —— 逐字稿 / 音频 / 视频 / 图形 / 数据 / 3D,逐项盘问
-3. **表达手段** —— 场景类型 / 字幕呈现 / 动效语言 / 节奏基准 / 叙事节拍
-4. **视觉主题** —— 选一个预设主题,或用你自己的自定义主题
-5. **参考与反例** —— 用具体参考作品和"绝对不要"反例校准方向
+### 改一个已经有的视频
 
-走完,它产出 `video-spec.md` —— 一份带完整分镜表的脚本。
-
-### 2. 改一个已有视频(迭代模式)
-
-项目里已经有 `video-spec.md` 时,直接说:
+项目里已经有 `video-spec.md`,想改直接说:
 
 ```
-把第 3 个镜头的节奏放慢一点,背景音乐换成更安静的
+第三个镜头节奏太快,放慢点;背景音乐换个安静的
 ```
 
-它会追问你想清楚,检测和现有脚本的冲突,然后更新 `video-spec.md`。
+它会先把你要的效果问清楚,看看这个改动会不会影响别的镜头,然后更新脚本。
 
-### 3. 渲染成视频
+### 渲染成视频
 
-`video-spec.md` 定稿后,交给 HyperFrames:
+脚本定稿,交给 HyperFrames:
 
 ```
 /hyperframes
 ```
 
-HyperFrames 会读脚本,把每个镜头渲染成真正的视频。
+video-spec-builder 出脚本,HyperFrames 把脚本变成视频,两个技能接力,各管一段。
 
-### 显式调用
-
-除了说人话自动触发,也可以显式调用(Claude Code):
-
-```
-/video-spec-builder
-```
-
----
-
-## 视觉主题
-
-视频长什么样,由"主题"决定。两条路:
-
-- **预设主题** —— HyperFrames 自带 8 个预设(Swiss Pulse / Shadow Cut / Data Drift…),选名字即可。
-- **自定义主题** —— 一个放在项目根目录的 `design.md`(HyperFrames 格式:YAML 头 + 设计规则章节)。
-
-本仓库根目录的 **Spec Mono** 主题(纯黑白 · SpaceX × Grok 视觉语言)就是一个**完整的自定义主题样板**:
-
-| 文件 | 作用 |
-|---|---|
-| `design.md` | 主题本体 —— HyperFrames 读这个文件 |
-| `tokens.css` | 可复用 CSS(设计变量 + 装饰工具类) |
-| `spec-mono-components.md` | 69 个组件在该主题下的逐个细规格 |
-
-要做自己的自定义主题,照着 `design.md` 的格式写一份,放到你视频项目的根目录即可。
-
----
+> 除了说人话自动触发,在 Claude Code 里也可以直接打 `/video-spec-builder` 显式调用。
 
 ## 仓库结构
 
 ```
 video-spec-builder/
-├── SKILL.md                      技能主文件(入口)
-├── README.md                     本文件
+├── SKILL.md                  技能主文件,AI 从这里读起
+├── README.md
 ├── LICENSE
-├── references/                   按需加载的参考文档
-│   ├── workflow-0-1.md             0-1 模式 5 阶段流程
-│   ├── workflow-iteration.md       迭代模式流程
-│   ├── question-bank.md            追问问题库(按 Phase 组织)
-│   ├── scene-breakdown.md          逐字稿 → 分镜的拆解方法论
-│   ├── components-catalog.md       69 个标准组件目录
-│   ├── pacing-rules.md             节奏 / 时长 / 转场规范
-│   ├── spec-rules.md               video-spec 字段约束 + 自检清单
-│   └── dialogue-style.md           对话风格范本
+├── references/               追问、拆分镜、节奏规范等参考文档,按需加载
+│   ├── workflow-0-1.md
+│   ├── workflow-iteration.md
+│   ├── question-bank.md
+│   ├── scene-breakdown.md
+│   ├── components-catalog.md
+│   ├── pacing-rules.md
+│   ├── spec-rules.md
+│   └── dialogue-style.md
 ├── templates/
-│   └── video-spec-template.md    video-spec.md 输出模板
+│   └── video-spec-template.md    video-spec.md 的输出模板
 ├── examples/
-│   └── video-spec-spacex.md      完整 video-spec 示例(SpaceX 发展史)
-│
-├── design.md                     Spec Mono 主题 —— 主题本体(HyperFrames 读这个)
-├── tokens.css                    Spec Mono 主题 —— 可复用 CSS
-└── spec-mono-components.md        Spec Mono 主题 —— 69 组件逐个细规格
+│   └── video-spec-spacex.md      一份完整的 video-spec 示例
+└── spec-mono/                    预置的自定义主题 Spec Mono
+    ├── design.md
+    ├── tokens.css
+    └── spec-mono-components.md
 ```
 
----
+## 视觉主题
 
-## 工作流全景
+视频长什么样,配色、字体、动效、转场风格,这些由"主题"决定。主题要么用 HyperFrames 自带的预设,要么自己写一套。
 
-```
-你说"我想做个视频"
-        │
-        ▼
-┌─────────────────────┐
-│  video-spec-builder │  追问到镜头粒度 · 5 阶段
-│  （本技能）          │
-└─────────────────────┘
-        │  产出
-        ▼
-   video-spec.md  +  design.md（主题）
-        │
-        ▼  /hyperframes
-┌─────────────────────┐
-│     HyperFrames     │  按脚本渲染成视频
-└─────────────────────┘
-        │
-        ▼
-     成品视频
-```
+### HyperFrames 的 8 个预设
 
----
+HyperFrames 内置了 8 套主题,报个名字就能用:
+
+| 主题 | 气质 | 适合 |
+|---|---|---|
+| Swiss Pulse | 精确、克制、瑞士排版 | SaaS、数据、开发者工具、指标看板 |
+| Velvet Standard | 高级、隽永 | 奢侈品、企业软件、主题演讲、投资路演 |
+| Deconstructed | 工业、粗粝 | 科技发布、安全产品、带点朋克劲的内容 |
+| Maximalist Type | 喧闹、动感 | 大型发布、里程碑公告、高能 hype 片 |
+| Data Drift | 未来感、沉浸 | AI 产品、ML 平台、前沿科技 |
+| Soft Signal | 亲密、温暖 | 健康品牌、个人故事、生活方式产品 |
+| Folk Frequency | 文化、鲜亮 | 消费类 app、美食、社区产品 |
+| Shadow Cut | 暗黑、电影感 | 安全产品、戏剧性揭示、严肃叙事 |
+
+选定之后,在 `video-spec.md` 里写上主题名就行。
+
+### 用自定义主题
+
+预设不够味,可以自己定一套。HyperFrames 对自定义主题有几条硬要求,不复杂:
+
+- 主题就是一个 `design.md` 文件,放在你视频项目的根目录。HyperFrames 渲染时会自动找到并读取它。
+- 文件格式是固定的。开头一段 YAML,写颜色、字体、圆角、间距、动效这些设计变量。下面用几个固定章节把设计规则讲清楚,章节是定死的:Overview、Colors、Typography、Elevation、Components、Do's and Don'ts。
+- 如果主题用到了 HyperFrames 没内置的字体,得自己把字体的 `.woff2` 文件放进项目的 `fonts/` 文件夹。
+
+说白了:把一份写好的 `design.md` 丢进视频项目根目录,主题就生效了。
+
+### 预置主题 Spec Mono
+
+不想从头写 `design.md` 也行。这个仓库的 `spec-mono/` 文件夹里,放着一套已经配好、可以直接用的自定义主题,叫 **Spec Mono**:纯黑白配色,SpaceX × Grok 那种几何、克制、工程感的视觉语言。
+
+<!-- 占位图:把 Spec Mono 的预览图放到 spec-mono/preview.png,再把下面这行的注释去掉 -->
+<!-- ![Spec Mono 主题预览](spec-mono/preview.png) -->
+
+*（此处放 Spec Mono 主题效果预览图）*
+
+`spec-mono/` 里有三个文件:
+
+| 文件 | 是什么 |
+|---|---|
+| `design.md` | 主题本体,HyperFrames 读的就是它 |
+| `tokens.css` | 一份现成的 CSS,颜色字体间距这些变量,外加一些装饰元素的样式 |
+| `spec-mono-components.md` | 69 种组件在这套主题下的逐个细节规格 |
+
+把 `spec-mono/design.md` 复制到你视频项目的根目录(`tokens.css` 一起带上),就能用。它本来就是照 HyperFrames 的格式写的。
 
 ## License
 
