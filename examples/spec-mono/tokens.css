@@ -1,0 +1,214 @@
+/* ============================================================
+   spec-mono · tokens.css
+   视觉语言：SpaceX × Grok × X —— 纯黑 / 纯白 · 几何 sans ·
+   condensed 数字 · spec-sheet 美学。
+   来源：assets/v2 设计系统（Claude Design 产出）的 :root 令牌 +
+   排版工具类 + spec-sheet 装饰工具类。已剔除展示页外壳样式
+   （.shell / .nav / .hero / .section / .stage 等不属于主题）。
+   ============================================================ */
+
+:root {
+  /* ---------- 颜色 · pure mono ---------- */
+  --bg:        #000000;                 /* 纯黑底 · 太空黑 */
+  --bg-card:   #0A0A0A;                 /* 卡片层 */
+  --bg-elev:   #141414;                 /* 抬起层 / 嵌套 */
+  --bg-flash:  #FFFFFF;                 /* 反白 cut-in（inversion-flash 专用） */
+
+  --fg:        #FFFFFF;                 /* 纯白主前景 */
+  --fg-2:      rgba(255,255,255,0.66);  /* 次级文字 */
+  --fg-3:      rgba(255,255,255,0.42);  /* meta / caption */
+  --fg-4:      rgba(255,255,255,0.18);  /* 极弱 / disabled */
+
+  --line:      rgba(255,255,255,0.08);  /* hairline 边线（默认） */
+  --line-2:    rgba(255,255,255,0.16);  /* 强 hairline */
+  --line-3:    rgba(255,255,255,0.28);  /* 最强 hairline / 箭头 */
+
+  /* 单 accent —— 整套系统唯一的用色变量，Tweaks 覆盖此值即可换色。
+     默认纯白 = Grok 式 mono；改成 hex 即得有色 accent。 */
+  --accent:    #FFFFFF;
+  --accent-2:  color-mix(in oklab, var(--accent) 40%, transparent);
+  --accent-3:  color-mix(in oklab, var(--accent) 14%, transparent);
+
+  /* 状态色 · 极少使用 · 仅数据图表内 */
+  --green:     #00E07A;                 /* 仪表绿 / 趋势好 */
+  --red:       #FF3333;                 /* abort red / error */
+  --yellow:    #FFC700;                 /* caution yellow */
+
+  /* ---------- 字体 ---------- */
+  --f-sans:    "Space Grotesk", "Inter Tight", "PingFang SC", "Noto Sans SC", -apple-system, sans-serif;
+  --f-cond:    "Barlow Semi Condensed", "Oswald", "Space Grotesk", sans-serif;   /* 海报大字 / 大数字 */
+  --f-mono:    "JetBrains Mono", "IBM Plex Mono", "Geist Mono", ui-monospace, monospace;
+  --f-cn:      "Noto Sans SC", "PingFang SC", "HarmonyOS Sans SC", sans-serif;   /* 中文主力 */
+  --f-serif:   "Instrument Serif", "Source Serif 4", "Noto Serif SC", serif;     /* 斜体强调字 / 引用 */
+
+  /* type ramp —— 文档值 = 4K (3840×2160) 目标画布的 1/2 等比 */
+  --t-display: 96px;                    /* hero · spec-sheet 大字 */
+  --t-h1:      56px;                    /* 大数字 */
+  --t-h2:      32px;
+  --t-h3:      22px;
+  --t-h4:      17px;
+  --t-body:    15px;
+  --t-small:   13px;
+  --t-cap:     11px;
+  --t-meta:    10px;
+
+  /* 字重 —— 只用 400 / 600 / 700 / 800，跳过 500（制造对比悬崖） */
+  --w-reg:   400;
+  --w-mid:   600;
+  --w-bold:  700;
+  --w-heavy: 800;
+
+  /* 字距 —— sans 偏紧、mono caps 偏松 */
+  --ls-display: -0.03em;
+  --ls-tight:   -0.018em;
+  --ls-normal:  -0.005em;
+  --ls-caps:     0.18em;
+  --ls-meta:     0.22em;
+  --ls-mission:  0.32em;                /* 任务字串 SCN-03 / T-MINUS 等极宽 */
+
+  /* ---------- 动效 ---------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);    /* 默认（入场柔） */
+  --ease-in:     cubic-bezier(0.55, 0, 1, 0.45);    /* 出场果断 */
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1); /* 仅 keyword-sticker 弹入 */
+
+  --d-1: 200ms;                         /* 微状态 hover / focus */
+  --d-2: 400ms;                         /* hot 高亮态 */
+  --d-3: 700ms;                         /* 卡片入场 */
+  --d-4: 1100ms;                        /* hero 入场 */
+
+  /* ---------- 圆角 —— 几何感：极小或 0 ---------- */
+  --r-0: 0px;                           /* wordmark · plate */
+  --r-1: 2px;                           /* 默认（SpaceX 极简） */
+  --r-2: 4px;                           /* 柔化 · tag */
+  --r-3: 8px;                           /* 大模块（谨慎） */
+
+  /* ---------- 间距 —— 8-pt 栅格，跳过 32/48/56 ---------- */
+  --space-1:  8px;                      /* icon · meta gap */
+  --space-2: 16px;                      /* 行间 · 卡片内 */
+  --space-3: 24px;                      /* 卡内段落 */
+  --space-4: 40px;                      /* 组件间 */
+  --space-5: 64px;                      /* 小节间 */
+  --space-6: 96px;                      /* 章节间 */
+
+  /* ---------- 描边宽度 —— 永远 1px ---------- */
+  --bw: 1px;
+}
+
+/* ---------- reset + 基础排版 ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+body {
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
+  font-weight: var(--w-reg);
+  letter-spacing: var(--ls-normal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11", "tnum";
+}
+:lang(zh), .cn { font-family: var(--f-cn); }
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ---------- 排版工具类 ---------- */
+.mono    { font-family: var(--f-mono); letter-spacing: 0; font-variant-ligatures: none; }
+.cond    { font-family: var(--f-cond); letter-spacing: var(--ls-tight); font-feature-settings: "tnum" 1; }
+.caps    { text-transform: uppercase; letter-spacing: var(--ls-caps); font-family: var(--f-mono); font-weight: var(--w-mid); }
+.meta    { font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: var(--ls-meta);
+           text-transform: uppercase; color: var(--fg-3); }
+.mission { font-family: var(--f-mono); letter-spacing: var(--ls-mission); text-transform: uppercase; }
+.serif   { font-family: var(--f-serif); font-weight: var(--w-reg); font-style: italic; }
+.big-num { font-family: var(--f-cond); font-weight: var(--w-bold); line-height: 0.86;
+           letter-spacing: -0.04em; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.t-minus { font-family: var(--f-cond); font-weight: var(--w-bold); letter-spacing: -0.03em;
+           line-height: 0.9; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   spec-sheet 装饰工具类（装饰层 · 受 showDeco 控制）
+   ============================================================ */
+
+/* 四角十字针脚 —— 卡片 / 框的角标 */
+.cross { position: absolute; width: 12px; height: 12px; color: var(--accent); pointer-events: none; }
+.cross::before, .cross::after { content: ""; position: absolute; background: currentColor; }
+.cross::before { left: 5px; top: 0; width: 1px; height: 100%; }
+.cross::after  { top: 5px; left: 0; width: 100%; height: 1px; }
+.cross--tl { top: -6px; left: -6px; }
+.cross--tr { top: -6px; right: -6px; }
+.cross--bl { bottom: -6px; left: -6px; }
+.cross--br { bottom: -6px; right: -6px; }
+
+/* 刻度尺 —— 信号 / 时码感的底栏装饰 */
+.tick-rule { display: flex; gap: 4px; align-items: flex-end; height: 14px; }
+.tick-rule i { display: block; width: 1px; background: var(--fg-3); opacity: 0.5; }
+.tick-rule i:nth-child(5n+1) { height: 14px; opacity: 1; }
+.tick-rule i:nth-child(5n+2), .tick-rule i:nth-child(5n+3),
+.tick-rule i:nth-child(5n+4), .tick-rule i:nth-child(5n+5) { height: 7px; }
+
+/* 编号前缀 —— accent 短杠 + mono caps */
+.idx { font-family: var(--f-mono); font-size: var(--t-cap); letter-spacing: var(--ls-mission);
+       color: var(--fg-3); text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
+.idx::before { content: ""; width: 22px; height: 1px; background: var(--accent); }
+
+/* eyebrow —— 章节小标，accent 圆点引导 */
+.eyebrow { font-family: var(--f-mono); font-size: var(--t-cap); letter-spacing: var(--ls-mission);
+           text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: "●"; font-size: 8px; }
+
+/* 居中分隔标签 —— 文字两侧 hairline 延伸 */
+.rule-label { display: flex; align-items: center; gap: 12px; font-family: var(--f-mono);
+              font-size: var(--t-cap); letter-spacing: var(--ls-caps); color: var(--fg-3); }
+.rule-label::before, .rule-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* spec-sheet 信息行 —— 仿 SpaceX 发射页 */
+.spec-row { display: flex; align-items: center; gap: 14px; font-family: var(--f-mono);
+            font-size: var(--t-cap); letter-spacing: var(--ls-mission); color: var(--fg-3);
+            text-transform: uppercase; }
+.spec-row b { color: var(--fg); font-weight: var(--w-mid); }
+.spec-row .accent { color: var(--accent); }
+
+/* 坐标块 —— 32°N 117°E 类装饰 */
+.coord { font-family: var(--f-mono); font-size: var(--t-cap); letter-spacing: var(--ls-caps);
+         color: var(--fg-3); text-transform: uppercase; }
+
+/* 术语方括号 —— [KEYWORD] */
+.bracket::before { content: "["; color: var(--accent); margin-right: 6px; }
+.bracket::after  { content: "]"; color: var(--accent); margin-left: 6px; }
+
+/* accent 下划高亮 —— 文字底部 12% 实色衬底 */
+.under-accent { background-image: linear-gradient(to bottom, transparent 88%, var(--accent) 88%, var(--accent) 100%);
+                background-repeat: no-repeat; padding: 0 2px; }
+
+/* 呼吸点 —— LIVE 状态指示 */
+.dot-pulse { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.dot-pulse::after { content: ""; position: absolute; inset: -4px; border-radius: 50%;
+                    border: 1px solid var(--accent); animation: dot-pulse 2.4s ease-out infinite; opacity: 0; }
+@keyframes dot-pulse {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* 键帽 */
+.kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 22px;
+       height: 22px; padding: 0 6px; font-family: var(--f-mono); font-size: var(--t-cap);
+       color: var(--fg-2); border: 1px solid var(--line-2); border-radius: var(--r-1);
+       background: rgba(255,255,255,0.02); }
+
+/* ============================================================
+   场景背景纹理（装饰层 · 一个场景最多用 1 种 · 受 showDeco 控制）
+   ============================================================ */
+.bg-dotgrid       { background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1.2px);
+                    background-size: 22px 22px; }
+.bg-hairline-grid { background-image:
+                      linear-gradient(to right,  rgba(255,255,255,0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+                    background-size: 44px 44px; }
+.bg-scan          { background-image: repeating-linear-gradient(0deg,
+                      rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 1px,
+                      transparent 1px, transparent 4px); }
+
+/* ---------- 通用入场动画 ---------- */
+@keyframes enter-up   { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes stick-in   { from { opacity: 0; transform: scale(0.92) rotate(-1.5deg); }
+                        to   { opacity: 1; transform: scale(1) rotate(0); } }
+@keyframes line-in    { from { transform: scaleX(0); } to { transform: scaleX(1); } }
