@@ -1,3 +1,6 @@
+![Uploading ChatGPT Image May 16, 2026, 10_46_58 PM.png…]()
+
+
 # video-spec-builder
 
 > 一个像视频编导的 skill。你说一句"我想做个视频",它就追着问你,帮你把想法理成一份能落地的分镜脚本。
