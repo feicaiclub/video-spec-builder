@@ -1,5 +1,7 @@
 <img width="2172" height="724" alt="ChatGPT Image May 16, 2026, 10_46_58 PM" src="https://github.com/user-attachments/assets/7820d93e-84b6-4e09-904c-9567c6595c57" />
 
+[English](README.en.md) · **中文**
+
 # video-spec-builder
 
 > 一个像视频编导的 skill。你说一句"我想做个视频",它就追着问你,帮你把想法理成一份能落地的分镜脚本。
@@ -182,7 +184,8 @@ HyperFrames 内置了 8 套主题,报个名字就能用:
 ```
 video-spec-builder/
 ├── SKILL.md                  技能主文件,AI 从这里读起
-├── README.md
+├── README.md                 中文
+├── README.en.md              English
 ├── LICENSE
 ├── references/               追问、拆分镜、节奏规范等参考文档,按需加载
 │   ├── workflow-0-1.md
