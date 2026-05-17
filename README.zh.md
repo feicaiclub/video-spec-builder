@@ -169,7 +169,8 @@ HyperFrames 内置了 8 套主题,报个名字就能用:
 <!-- 占位图:把 Spec Mono 的预览图放到 spec-mono/preview.png,再把下面这行的注释去掉 -->
 <!-- ![Spec Mono 主题预览](spec-mono/preview.png) -->
 
-*（此处放 Spec Mono 主题效果预览图）*
+下载浏览完整主题设计 [视频组件库 v2 · 硅谷暗色科技风.pdf](https://github.com/user-attachments/files/27866485/v2.pdf)
+<img width="1020" height="1440" alt="视频组件库 v2 · 硅谷暗色科技风" src="https://github.com/user-attachments/assets/55013ef0-946b-46da-812c-f6e9e5f47ed9" />
 
 `spec-mono/` 文件夹里有三个文件:
 
