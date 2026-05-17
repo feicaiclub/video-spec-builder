@@ -169,7 +169,8 @@ Writing a `design.md` from scratch takes some work, so I made one ahead of time 
 <!-- placeholder: drop the Spec Mono preview image at spec-mono/preview.png, then uncomment the line below -->
 <!-- ![Spec Mono preview](spec-mono/preview.png) -->
 
-[视频组件库 v2 · 硅谷暗色科技风.pdf](https://github.com/user-attachments/files/27866436/v2.pdf)
+Download to see complete design [视频组件库 v2 · 硅谷暗色科技风.pdf](https://github.com/user-attachments/files/27866436/v2.pdf)
+<img width="1020" height="1440" alt="视频组件库 v2 · 硅谷暗色科技风" src="https://github.com/user-attachments/assets/bef576da-73ba-4bad-a9c4-3c673e652eaa" />
 
 The `spec-mono/` folder holds three files:
 
