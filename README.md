@@ -169,7 +169,7 @@ Writing a `design.md` from scratch takes some work, so I made one ahead of time 
 <!-- placeholder: drop the Spec Mono preview image at spec-mono/preview.png, then uncomment the line below -->
 <!-- ![Spec Mono preview](spec-mono/preview.png) -->
 
-*(Spec Mono theme preview goes here)*
+<img width="1020" height="1440" alt="视频组件库 v2 · 硅谷暗色科技风" src="https://github.com/user-attachments/assets/e6b2f34f-4480-486f-97cb-e057192368d8" />
 
 The `spec-mono/` folder holds three files:
 
