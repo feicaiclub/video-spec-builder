@@ -1,0 +1,108 @@
+/* ================================================================
+   tokens.css — 视频组件库 v2 · SpaceX × Grok × X 视觉语言
+   纯黑 / 纯白 · 几何 sans · condensed 数字 · spec-sheet 美学
+   ================================================================ */
+:root {
+  /* ---------- color · pure mono ---------- */
+  --bg:        #000000;          /* pure black · 太空黑 */
+  --bg-card:   #0A0A0A;          /* 卡片层 */
+  --bg-elev:   #141414;          /* 抬起层 */
+  --bg-flash:  #FFFFFF;          /* 反白 cut-in */
+
+  --fg:        #FFFFFF;          /* pure white */
+  --fg-2:      rgba(255,255,255,0.66);
+  --fg-3:      rgba(255,255,255,0.42);
+  --fg-4:      rgba(255,255,255,0.18);
+
+  --line:      rgba(255,255,255,0.08);
+  --line-2:    rgba(255,255,255,0.16);
+  --line-3:    rgba(255,255,255,0.28);
+
+  /* single accent — Tweaks 可换 · 默认就是白 (Grok-style mono) */
+  --accent:    #FFFFFF;
+  --accent-2:  color-mix(in oklab, var(--accent) 40%, transparent);
+  --accent-3:  color-mix(in oklab, var(--accent) 14%, transparent);
+
+  /* status · 极少使用 · 仅图表 */
+  --green:     #00E07A;          /* SpaceX 仪表绿 */
+  --red:       #FF3333;          /* abort red */
+  --yellow:    #FFC700;          /* caution yellow */
+
+  /* ---------- type · SpaceX × X × Grok stack ---------- */
+  --f-sans:    "Space Grotesk", "Inter Tight", "PingFang SC", "Noto Sans SC", -apple-system, sans-serif;
+  --f-cond:    "Barlow Semi Condensed", "Oswald", "Space Grotesk", sans-serif;  /* big numbers / display */
+  --f-mono:    "JetBrains Mono", "IBM Plex Mono", "Geist Mono", ui-monospace, monospace;
+  --f-cn:      "Noto Sans SC", "PingFang SC", "HarmonyOS Sans SC", sans-serif;
+
+  /* type ramp — half-scale of 4K target */
+  --t-display: 96px;   /* hero · spec sheet hero */
+  --t-h1:      56px;   /* big numbers */
+  --t-h2:      32px;
+  --t-h3:      22px;
+  --t-h4:      17px;
+  --t-body:    15px;
+  --t-small:   13px;
+  --t-cap:     11px;
+  --t-meta:    10px;
+
+  /* weights — 跳过 500/700，对比悬崖 */
+  --w-reg:  400;
+  --w-mid:  600;
+  --w-bold: 700;
+  --w-heavy: 800;
+
+  /* letter-spacing — SpaceX 偏紧 + caps 偏松 */
+  --ls-display: -0.03em;
+  --ls-tight:   -0.018em;
+  --ls-normal:  -0.005em;
+  --ls-caps:     0.18em;
+  --ls-meta:     0.22em;
+  --ls-mission:  0.32em;        /* T-MINUS 等任务字串极宽 */
+
+  /* ---------- motion ---------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:     cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+
+  --d-1: 200ms;
+  --d-2: 400ms;
+  --d-3: 700ms;
+  --d-4: 1100ms;
+
+  /* ---------- radii — SpaceX 几何感：极小或 0 ---------- */
+  --r-0: 0px;
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
+}
+
+/* ---------- reset ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+body {
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
+  font-weight: var(--w-reg);
+  letter-spacing: var(--ls-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11", "tnum";
+}
+
+:lang(zh), .cn { font-family: var(--f-cn); }
+
+.mono { font-family: var(--f-mono); letter-spacing: 0; font-variant-ligatures: none; }
+.cond { font-family: var(--f-cond); letter-spacing: var(--ls-tight); font-feature-settings: "tnum" 1; }
+.caps { text-transform: uppercase; letter-spacing: var(--ls-caps); font-family: var(--f-mono); font-weight: var(--w-mid); }
+.meta { font-family: var(--f-mono); font-size: var(--t-meta); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--fg-3); }
+.mission { font-family: var(--f-mono); letter-spacing: var(--ls-mission); text-transform: uppercase; }
+
+.serif { font-family: var(--f-sans); font-weight: var(--w-reg); font-style: italic; }

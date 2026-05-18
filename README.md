@@ -182,6 +182,8 @@ The `spec-mono/` folder holds three files:
 
 To use it, copy `spec-mono/design.md` into your video project root and bring `tokens.css` along. It's already written to HyperFrames' format, so it renders right away.
 
+> **Heads up:** the `design.md` tokens and `spec-mono-components.md` here are only a distilled, condensed extract. The complete theme design code is generated and downloaded from Claude Design. For the full implementation code, see the `Full Code/` folder.
+
 ## What's in this repo
 
 ```

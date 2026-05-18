@@ -182,6 +182,8 @@ HyperFrames 内置了 8 套主题,报个名字就能用:
 
 用法:把 `spec-mono/design.md` 复制到你视频项目的根目录,`tokens.css` 一起带上。它本来就是照 HyperFrames 的格式写的,放进去就能渲。
 
+> **说明:** 这里的 `design.md` tokens 和 `spec-mono-components.md` 只是精简提炼后的内容。完整的主题设计代码需要从 Claude Design 下载生成。具体的实现代码请查看 `Full Code/` 文件夹。
+
 ## 仓库结构
 
 ```
